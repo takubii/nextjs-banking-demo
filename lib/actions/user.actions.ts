@@ -1,5 +1,7 @@
 'use server';
 
+import { createSessionClient } from '@/lib/appwrite';
+
 export const signIn = async () => {
   try {
     // Mutation / Database / Make fetch
@@ -15,3 +17,13 @@ export const signUp = async (userData: SignUpParams) => {
     console.error('Error', error);
   }
 };
+
+export async function getLoggedInUser() {
+  try {
+    const { account } = await createSessionClient();
+
+    return await account.get();
+  } catch (error) {
+    return null;
+  }
+}
